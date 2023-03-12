@@ -7,7 +7,7 @@ const app = express();
 
 //#region mongoDB setup
 mongoose
-  .connect("mongodb://127.0.0.1/login_test", {
+  .connect("mongodb://127.0.0.1/Url_Shortener", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -54,7 +54,7 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const data = await users.findOne({ name: req.body.username });
-  if (data.name == null) {
+  if (data == null) {
     return res.status(400).send("Cannot find user");
   }
   try {
@@ -63,7 +63,7 @@ app.post("/login", async (req, res) => {
       username = data.name;
       res.redirect("/");
     } else {
-      res.sendStatus(500);
+      res.send("Password is incorrect");
     }
   } catch {
     res.sendStatus(500);
